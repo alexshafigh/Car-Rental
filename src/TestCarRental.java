@@ -19,7 +19,8 @@ public class TestCarRental {
         cr.release(customer1);
         cr.report();
 
-
+        cr.release(new Car());
+        cr.report();
 
 
     }

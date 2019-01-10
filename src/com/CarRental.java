@@ -1,21 +1,26 @@
 package com;
 
-import java.util.*;
-import java.util.concurrent.SynchronousQueue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarRental { //This is Singleton Class
     private static CarRental carRental;
     private static List<Car> cars ;
+    private static List<Car> firstCars;
     private static int fail_times = 0;
     private static int initial_capacity = 3;
 
     private CarRental() {
         cars = new ArrayList<>(initial_capacity);
+        firstCars = new ArrayList<>(initial_capacity);
+
         for (int counter = 0 ; counter<initial_capacity ; counter++)
         {
             Car car = new Car();
             cars.add(car);
+            firstCars.add(car);
         }
+//        firstCars = cars;
     }
 
     public static CarRental getInstance(){
@@ -42,6 +47,7 @@ public class CarRental { //This is Singleton Class
             {
                 Car car = new Car();
                 cars.add(car);
+                firstCars.add(car);
                 fail_times = 0;
             }
         }
@@ -51,7 +57,8 @@ public class CarRental { //This is Singleton Class
 
     public static void release(Car carz){
         System.out.println("  ************ A New Car Released *******************");
-        cars.add(carz);
+        if (firstCars.contains(carz)) cars.add(carz);
+        else System.out.println(" You Releasing A wrong Car ");
     }
 
 
